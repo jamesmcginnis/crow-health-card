@@ -56,34 +56,6 @@ The assistant only sees the health data shown on the card. Nothing is sent until
 
 ---
 
-## 🚀 Installation
-
-### Via HACS (Recommended)
-
-Click the button below to add this repository to HACS:
-
-[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=jamesmcginnis&repository=crow-health-card&category=plugin)
-
-Then:
-
-1. Open **HACS** in Home Assistant
-2. Go to **Frontend**
-3. Search for **Crow Health Card**
-4. Click **Download**
-5. Reload your browser
-
-### Manual Installation
-
-1. Download `crow-health-card.js` from the [latest release](https://github.com/jamesmcginnis/crow-health-card/releases/latest)
-2. Copy it to `/config/www/crow-health-card.js`
-3. In Home Assistant go to **Settings → Dashboards → Resources**
-4. Add a new resource:
-   - URL: `/local/crow-health-card.js`
-   - Type: **JavaScript module**
-5. Reload your browser
-
----
-
 ## 📱 Getting Health Data into Home Assistant
 
 The card has only been tested with **Apple Health** data, shared through the **Home Assistant Companion App** on iPhone:
@@ -96,74 +68,9 @@ The card finds these sensors automatically. Modules without a matching sensor si
 
 ---
 
-## 🛠️ Dashboard Card Configuration
+## Configuration
 
-Add the card from the card picker (search for **Crow Health Card**), or choose **Manual** and use:
-
-```yaml
-type: custom:crow-health-card
-```
-
-The editor finds your health sensors for you, and everything else can be set there. Every option below also works in YAML.
-
-### Options
-
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `title` | `string` | `Summary` | Card title, also used as the header of PDF reports |
-| `card_style` | `classic` \| `glass` | `classic` | Card style |
-| `appearance` | `auto` \| `light` \| `dark` | `auto` | Theme for the Glass style and its pop-ups |
-| `glass` | `0–100` | `50` | Glass transparency, from clear to frosted (Glass style only) |
-| `accent_color` | `string` | `#FF375F` | Accent colour |
-| `history_days` | `1–90` | `7` | Days of history for detail charts and PDF exports |
-| `glucose_unit` | `mg/dL` \| `mmol/L` | `mg/dL` | Blood glucose unit, which also sets its target bands |
-| `enabled_modules` | `list` | all | Modules to show |
-| `module_order` | `list` | catalog order | Display order |
-| `module_overrides` | `map` | `{}` | Module key → entity ID, overriding auto-discovery |
-| `persistent_storage` | `boolean` | `false` | Sync preferences through Home Assistant's user data |
-| `ai_features_enabled` | `boolean` | `false` | Turns on the AI features |
-| `ai_conversation_agent` | `string` | — | HA conversation agent used for every AI feature |
-| `ai_daily_summary` / `ai_trend_notes` / `ai_recap_enabled` / `ai_ask_enabled` / `ai_advice_enabled` | `boolean` | `true` | Individual AI features |
-
-**Module keys:** `vitals`, `sleep_score`, `heart_rate`, `resting_heart_rate`, `heart_rate_variability`, `walking_heart_rate_average`, `blood_pressure`, `blood_oxygen`, `respiratory_rate`, `vo2_max`, `body_temperature`, `basal_body_temperature`, `weight`, `body_fat_percentage`, `lean_body_mass`, `blood_glucose`, `water`, `steps`, `distance`, `flights_climbed`, `active_energy`, `resting_energy`, `average_active_pace`, `sleep_duration`
-
-### Example
-
-```yaml
-type: custom:crow-health-card
-title: Summary
-card_style: glass
-appearance: auto
-accent_color: "#FF375F"
-history_days: 14
-glucose_unit: mmol/L
-enabled_modules:
-  - vitals
-  - sleep_score
-  - heart_rate
-  - steps
-  - sleep_duration
-  - weight
-module_overrides:
-  weight: sensor.bathroom_scale_weight
-ai_features_enabled: true
-ai_conversation_agent: conversation.google_ai_conversation
-```
-
----
-
-## 👆 Interactions
-
-| Gesture | Action |
-|---|---|
-| **Tap a module** | Detail view with a chart (D / W / M / 6M), stats and Export |
-| **Tap a stat or chart point** | An explanation, plus a one-line AI comment when AI is on |
-| **Tap Export** (in a detail view) | Choose a range and the format (CSV, JSON or PDF) |
-| **Tap the AI summary** | AI Insights: the full summary and the Weekly/Monthly Recap |
-| **Tap Ask** | Ask a question about your recent data |
-| **Tap Improve This** | A general lifestyle tip for that module |
-
-PDF export loads a small PDF library from `cdnjs.cloudflare.com` the first time you use it, so the device needs internet access for that step.
+Add the card from the card picker. The editor finds your health sensors for you, and everything else is set in the built-in visual editor, so you don't need any YAML. See the README for the full list of YAML options and module keys.
 
 ---
 
@@ -199,9 +106,3 @@ In the card's visual editor, open **AI Features**, turn on **Enable AI Features*
 ### Rate limits
 
 Free-tier limits vary by model and change over time, so check Google AI Studio for your current quota. The card only calls the agent when you use an AI feature and it caches answers, so you're unlikely to reach the limit in normal use. If you do see a quota message, it resets the next day.
-
----
-
-## 📄 License
-
-MIT License — free to use, modify, and distribute.
